@@ -4,13 +4,28 @@ import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
 
 class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+        console.log('[App.js] Constructor');
+    }
+
     state = {
-        showPersons: true,
+        showPersons: false,
         persons: [
             {id: "haad", name: "Abhishek", age: 22},
             {id: "dwdw", name: "Tushar", age: 23},
             {id: "gegfwf", name: "Stephanie", age: 24},
         ]
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('[App.js] getDerivedStateFromProps', props);
+        return state;
+    }
+
+    componentDidMount() {
+        console.log('[App.js] componentDidMount');
     }
 
     togglePersonHandler = () => {
@@ -46,13 +61,15 @@ class App extends React.Component {
     }
 
     render() {
+        console.log('[App.js] Rendering');
         let persons = null;
 
         if (this.state.showPersons) {
             persons = <Persons
                 persons={this.state.persons}
                 clicked={this.deletePersonHandler}
-                changed={this.nameChangedHandler}/>;
+                changed={this.nameChangedHandler}
+            />;
         }
 
         return (
@@ -61,7 +78,8 @@ class App extends React.Component {
                     title={this.props.appTitle}
                     showPersons={this.state.showPersons}
                     persons={this.state.persons}
-                    clicked={this.togglePersonHandler}/>
+                    clicked={this.togglePersonHandler}
+                />
                 {persons}
             </div>
         );

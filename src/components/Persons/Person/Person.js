@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import CssClasses from './Person.module.css'
 
 // const StyledDiv = styled.div`
@@ -14,18 +14,23 @@ import CssClasses from './Person.module.css'
 //     }
 // `;
 
-const person = (props) => {
+class Person extends Component {
 
-    return (
-        <div className={CssClasses.Person}>
-            <p onClick={props.onClick}> I'm {props.name} and I'm {props.age} years old! </p>
-            <p>{props.children}</p>
-            <input
-                type="text"
-                onChange={props.onNameChanged}
-                value={props.name}
-            />
-        </div>
-    );
+    render() {
+        console.log('[Person.js] Rendering');
+        return (
+            <div className={CssClasses.Person}>
+                <p onClick={this.props.onClick}> I'm {this.props.name} and I'm {this.props.age} years old! </p>
+                <p>{this.props.children}</p>
+                <input
+                    className={CssClasses.Input}
+                    type="text"
+                    onChange={this.props.onNameChanged}
+                    value={this.props.name}
+                />
+            </div>
+        );
+    }
 }
-export default person;
+
+export default Person;
