@@ -28,6 +28,15 @@ class App extends React.Component {
         console.log('[App.js] componentDidMount');
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log('[App.js] shouldComponentUpdate');
+        return true;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('[App.js] componentDidUpdate');
+    }
+
     togglePersonHandler = () => {
         const isVisible = this.state.showPersons;
         this.setState({
@@ -36,7 +45,7 @@ class App extends React.Component {
     }
 
     deletePersonHandler = (personIndex) => {
-        const persons = this.state.persons;
+        const persons = [...this.state.persons];
         persons.splice(personIndex, 1);
         this.setState({
             persons: persons
@@ -77,7 +86,7 @@ class App extends React.Component {
                 <Cockpit
                     title={this.props.appTitle}
                     showPersons={this.state.showPersons}
-                    persons={this.state.persons}
+                    personsLength={this.state.persons.length}
                     clicked={this.togglePersonHandler}
                 />
                 {persons}
