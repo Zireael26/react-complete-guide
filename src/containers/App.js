@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import CssClasses from './App.module.css';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
+import withClass from "../hoc/withClass";
 
 class App extends React.Component {
 
@@ -16,7 +17,8 @@ class App extends React.Component {
             {id: "haad", name: "Abhishek", age: 22},
             {id: "dwdw", name: "Tushar", age: 23},
             {id: "gegfwf", name: "Stephanie", age: 24},
-        ]
+        ],
+        changeCounter: 0
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -66,7 +68,12 @@ class App extends React.Component {
         const persons = [...this.state.persons];
         persons[personIndex] = affectedPerson;
 
-        this.setState({persons: persons});
+        this.setState((prevState, props) => {
+            return {
+                persons: persons,
+                changeCounter: prevState.changeCounter + 1
+            };
+        });
     }
 
     render() {
@@ -82,7 +89,7 @@ class App extends React.Component {
         }
 
         return (
-            <div className={CssClasses.App}>
+            <Fragment>
                 <Cockpit
                     title={this.props.appTitle}
                     showPersons={this.state.showPersons}
@@ -90,9 +97,9 @@ class App extends React.Component {
                     clicked={this.togglePersonHandler}
                 />
                 {persons}
-            </div>
+            </Fragment>
         );
     }
 }
 
-export default App;
+export default withClass(App, CssClasses.App);

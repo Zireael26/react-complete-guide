@@ -1,5 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import CssClasses from './Person.module.css'
+import withClass from '../../../hoc/withClass'
+import PropTypes from 'prop-types'
 
 // const StyledDiv = styled.div`
 //     width: 60%;
@@ -16,21 +18,42 @@ import CssClasses from './Person.module.css'
 
 class Person extends Component {
 
+    constructor(props) {
+        super(props);
+        this.inputElementRef = React.createRef();
+    }
+
+    componentDidMount() {
+        // this.inputElement.focus();
+        this.inputElementRef.current.focus();
+    }
+
     render() {
         console.log('[Person.js] Rendering');
         return (
-            <div className={CssClasses.Person}>
+            <Fragment>
                 <p onClick={this.props.onClick}> I'm {this.props.name} and I'm {this.props.age} years old! </p>
                 <p>{this.props.children}</p>
                 <input
+                    // ref={(inputElem) => {
+                    //     this.inputElement = inputElem;
+                    // }}
+                    ref={this.inputElementRef}
                     className={CssClasses.Input}
                     type="text"
                     onChange={this.props.onNameChanged}
                     value={this.props.name}
                 />
-            </div>
+            </Fragment>
         );
     }
 }
 
-export default Person;
+Person.propTypes = {
+    onClick: PropTypes.func,
+    age: PropTypes.number,
+    name: PropTypes.string,
+    onChange: PropTypes.func
+};
+
+export default withClass(Person, CssClasses.Person);
