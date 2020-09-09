@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import CssClasses from './Person.module.css'
 import withClass from '../../../hoc/withClass'
 import PropTypes from 'prop-types'
+import AuthContext from '../../../context/auth-context'
 
 // const StyledDiv = styled.div`
 //     width: 60%;
@@ -23,15 +24,19 @@ class Person extends Component {
         this.inputElementRef = React.createRef();
     }
 
+    static contextType = AuthContext;
+
     componentDidMount() {
         // this.inputElement.focus();
         this.inputElementRef.current.focus();
+        console.log(this.context.authenticated);
     }
 
     render() {
         console.log('[Person.js] Rendering');
         return (
             <Fragment>
+                {this.context.authenticated ? <p>Authenticated!</p> : <p>Please log in!</p>}
                 <p onClick={this.props.onClick}> I'm {this.props.name} and I'm {this.props.age} years old! </p>
                 <p>{this.props.children}</p>
                 <input

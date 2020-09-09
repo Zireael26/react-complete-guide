@@ -29,3 +29,15 @@
 .Button.Red:hover {
     background-color: salmon;
 }
+
+.LoginButton {
+    background-color: darkcyan;
+    font: inherit;
+    border: 1px solid #ccc;
+    padding: 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    margin-left: 16px;
+}

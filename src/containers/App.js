@@ -1,8 +1,9 @@
-import React, {Fragment} from 'react';
-import CssClasses from './App.module.css';
+import React, {Fragment} from 'react'
+import CssClasses from './App.module.css'
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
-import withClass from "../hoc/withClass";
+import withClass from '../hoc/withClass'
+import AuthContext from '../context/auth-context'
 
 class App extends React.Component {
 
@@ -18,7 +19,8 @@ class App extends React.Component {
             {id: "dwdw", name: "Tushar", age: 23},
             {id: "gegfwf", name: "Stephanie", age: 24},
         ],
-        changeCounter: 0
+        changeCounter: 0,
+        authenticated: false
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -76,6 +78,12 @@ class App extends React.Component {
         });
     }
 
+    loginHandler = () => {
+        this.setState({
+            authenticated: true
+        });
+    };
+
     render() {
         console.log('[App.js] Rendering');
         let persons = null;
@@ -85,18 +93,26 @@ class App extends React.Component {
                 persons={this.state.persons}
                 clicked={this.deletePersonHandler}
                 changed={this.nameChangedHandler}
+                isAuthenticated={this.state.authenticated}
             />;
         }
 
         return (
             <Fragment>
-                <Cockpit
-                    title={this.props.appTitle}
-                    showPersons={this.state.showPersons}
-                    personsLength={this.state.persons.length}
-                    clicked={this.togglePersonHandler}
-                />
-                {persons}
+                <AuthContext.Provider value={
+                    {
+                        authenticated: this.state.authenticated,
+                        login: this.loginHandler
+                    }
+                }>
+                    <Cockpit
+                        title={this.props.appTitle}
+                        showPersons={this.state.showPersons}
+                        personsLength={this.state.persons.length}
+                        clicked={this.togglePersonHandler}
+                    />
+                    {persons}
+                </AuthContext.Provider>
             </Fragment>
         );
     }

@@ -10,15 +10,15 @@ class Persons extends PureComponent {
 
     // shouldComponentUpdate(nextProps, nextState, nextContext) {
     //     console.log('[Persons.js] shouldComponentUpdate');
-        // if (nextProps.persons !== this.props.persons ||
-        //     nextProps.clicked !== this.props.clicked ||
-        //     nextProps.changed !== this.props.changed) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
+    // if (nextProps.persons !== this.props.persons ||
+    //     nextProps.clicked !== this.props.clicked ||
+    //     nextProps.changed !== this.props.changed) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
 
-        // return true;
+    // return true;
     // }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -32,15 +32,19 @@ class Persons extends PureComponent {
 
     render() {
         console.log('[Persons.js] Rendering');
-        return this.props.persons.map((person, index) => {
-            return <Person
-                name={person.name}
-                age={person.age}
-                onClick={() => this.props.clicked(index)}
-                key={person.id}
-                onNameChanged={(event) => this.props.changed(event, person.id)}
-            />;
-        });
+        return (
+            this.props.persons.map((person, index) => {
+                return <Person
+                    name={person.name}
+                    age={person.age}
+                    onClick={() => this.props.clicked(index)}
+                    key={person.id}
+                    onNameChanged={(event) => this.props.changed(event, person.id)}
+                />;
+            })
+        );
+
+
     }
 
 
